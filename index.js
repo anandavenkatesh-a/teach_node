@@ -82,6 +82,35 @@ router.get('/getAll', async (req, res) => {
     }
 })
 
+router.post('/updateName',async (req,res) => {
+    try{
+       await Student.findOneAndUpdate({rollno:req.body.rollno},{name:req.body.name}); 
+       const updatedStudent = await Student.findOne({
+           rollno:req.body.rollno
+       });
+
+       res.status(200).json({
+          message : "updated!",
+          data : updatedStudent
+       })
+    }
+    catch(error){
+       res.status(500).json({
+        message:error.message
+       })  
+    }
+})
+
+router.post('/deleteStudent',async (req,res) => {
+    try{
+       await Student.deleteOne({rollno:req.body.rollno});
+       res.status(200).json({message:"deleted"});
+    }
+    catch(error){
+       res.status(500).json({message:error.message}); 
+    }
+})
+
 app.listen(3000, () => {
     console.log(`Server Started at ${3000}`)
 })
