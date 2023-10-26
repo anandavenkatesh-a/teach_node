@@ -84,7 +84,11 @@ router.get('/getAll', async (req, res) => {
 
 router.post('/updateName',async (req,res) => {
     try{
-       await Student.findOneAndUpdate({rollno:req.body.rollno},{name:req.body.name}); 
+       let oldStudent = await Student.findOneAndUpdate({rollno:req.body.rollno},{name:req.body.name}); 
+       if(!oldStudent){
+          throw new Error("Student not found!");
+       }
+
        const updatedStudent = await Student.findOne({
            rollno:req.body.rollno
        });
@@ -103,7 +107,11 @@ router.post('/updateName',async (req,res) => {
 
 router.post('/deleteStudent',async (req,res) => {
     try{
-       await Student.deleteOne({rollno:req.body.rollno});
+       let oldStudent = await Student.deleteOne({rollno:req.body.rollno});
+       if(!oldStudent){
+         throw new Error("Student not found!");
+       }
+       
        res.status(200).json({message:"deleted"});
     }
     catch(error){
