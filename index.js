@@ -108,7 +108,7 @@ router.post('/updateName',async (req,res) => {
 router.post('/deleteStudent',async (req,res) => {
     try{
        let oldStudent = await Student.deleteOne({rollno:req.body.rollno});
-       if(!oldStudent){
+       if(oldStudent.deletedCount == 0){
          throw new Error("Student not found!");
        }
        
