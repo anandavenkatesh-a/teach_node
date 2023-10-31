@@ -12,14 +12,9 @@ app.use(
     extended: true,
   }),
 );
-app.use(
-  cors({
-    origin: ["http://localhost:2000"],
-    credentials: true,
-  }),
-);
+app.use(cors());
 
-const mongoString = "mongodb://localhost:27017/learn_node"
+const mongoString = "mongodb://localhost:27017/student_details"
 
 mongoose.connect(mongoString);
 const database = mongoose.connection
